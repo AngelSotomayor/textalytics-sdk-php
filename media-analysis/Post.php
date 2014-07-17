@@ -29,13 +29,15 @@ class Post{
    * @return string with the API response or false if the request failed
    */
   public function sendPost() {
+    $params_sent = $this->params;
+    $params_sent['src'] = 'sdk-php-1.0';//we identify where the call is from
     $context = stream_context_create(
     array('http'=>array(
       'method' =>'POST',
       'header' => (isset($_SERVER['HTTP_USER_AGENT']) ? 'User-Agent: '.$_SERVER['HTTP_USER_AGENT']."\r\n" : '').
                   'Content-type: application/x-www-form-urlencoded'."\r\n",
       'ignore_errors' => 1,
-      'content' => http_build_query($this->params))));
+      'content' => http_build_query($params_sent))));
     $fp = fopen($this->service, 'r', false, $context);
     if($fp != NULL){
       $response = stream_get_contents($fp);

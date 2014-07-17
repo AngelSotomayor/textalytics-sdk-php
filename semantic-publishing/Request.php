@@ -33,13 +33,17 @@ class Request{
    * @return array with two elements, the API response and the HTTP response 
    */
   public function sendPOST() {
+    $params_sent = $this->params;
+    $params_sent['src'] = 'sdk-php-1.0';
+
     $context = stream_context_create(
     array('http'=>array(
       'method' =>'POST',
       'header' => (isset($_SERVER['HTTP_USER_AGENT']) ? 'User-Agent: '.$_SERVER['HTTP_USER_AGENT']."\r\n" : '').
                   'Content-type: application/x-www-form-urlencoded'."\r\n",
       'ignore_errors' => 1,
-      'content' => http_build_query($this->params))));
+      'content' => http_build_query($params_sent))));
+
     $fp = fopen($this->url, 'r', false, $context);
     if($fp != NULL){
       $response = array('http-response' => $http_response_header, 'api-response' => stream_get_contents($fp));
@@ -59,7 +63,8 @@ class Request{
     //builds the string with the parameters to send    
     $content = '';
     foreach($this->params as $k=>$val)
-      $content .= '&'.$k.'='.rawurlencode($val);    
+    $content .= '&'.$k.'='.rawurlencode($val);    
+    $content .= '&src=sdk-php-1.0';
     $content = substr($content, 1, strlen($content));//removes the first &
     $context = stream_context_create(array('http'=>array('ignore_errors' => 1)));
     $r = @file_get_contents($this->url.'?'.$content, false, $context);
@@ -80,6 +85,7 @@ class Request{
     $content = '';
     foreach($this->params as $k=>$val)
         $content .= '&'.$k.'='.rawurlencode($val);
+    $content .= '&src=sdk-php-1.0';
     $content = substr($content, 1, strlen($content));//removes the first &
     $context = stream_context_create(array('http'=>array('method' =>'DELETE', 'ignore_errors' => 1)));
     $r = @file_get_contents($this->url.'?'.$content, false, $context);
@@ -96,13 +102,15 @@ class Request{
    */
   
   function sendPUT(){
+    $params_sent = $this->params;
+    $params_sent['src'] = 'sdk-php-1.0';
     $context = stream_context_create(
     array('http'=>array(
       'method' =>'PUT',
       'header' => (isset($_SERVER['HTTP_USER_AGENT']) ? 'User-Agent: '.$_SERVER['HTTP_USER_AGENT']."\r\n" : '').
                   'Content-type: application/x-www-form-urlencoded'."\r\n",
       'ignore_errors' => 1,
-      'content' => http_build_query($this->params))));
+      'content' => http_build_query($params_sent))));
     $fp = @fopen($this->url, 'r', false, $context);
     if($fp != NULL){
       $response = array('http-response' => $http_response_header, 'api-response' => stream_get_contents($fp));

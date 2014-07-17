@@ -34,7 +34,7 @@ class Result{
     //initializes all the possible elements
     $this->id = $result['id'];
     $this->sentiment = isset($result['sentiment']) ? $result['sentiment'] : '';
-    $this->categories = isset($result['categories']) ? $result['categories'] : array();
+    $this->categories = isset($result['categorization']) ? $result['categorization'] : array();
     $this->entities = isset($result['entities']) ? $result['entities'] : array();
     $this->concepts = isset($result['concepts']) ? $result['concepts'] : array();
     $this->timeExpressions = isset($result['timeExpressions']) ? $result['timeExpressions'] : array();

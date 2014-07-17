@@ -3,7 +3,7 @@
 # Copyright: Daedalus - Data, Decisions and Language  
 # author: zdepablo
 
-CLIENT_VERSION = 1.0
+CLIENT_VERSION = 1.0.1
 API_VERSION = 1.0
 API_NAME = media-$(API_VERSION)
 NAME = textalytics-sdk-php-$(API_NAME)
@@ -21,6 +21,6 @@ package: clean
 	cp *.php $(TARGET_DIR)/$(NAME)/
 	cp example.txt $(TARGET_DIR)/$(NAME)/
 	cp config.inc $(TARGET_DIR)/$(NAME)/
-	cp README $(TARGET_DIR)/$(NAME)/
+	cp README.md $(TARGET_DIR)/$(NAME)/
 	cp LICENSE $(TARGET_DIR)/$(NAME)/
 	cd $(TARGET_DIR); tar -zcvf $(NAME).tar.gz $(NAME)/* 
