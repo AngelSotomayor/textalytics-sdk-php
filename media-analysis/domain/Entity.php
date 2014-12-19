@@ -43,7 +43,7 @@ class Entity{
   * @return string with the type of entity
   */
   public function getType(){
-    return $this->form;
+    return $this->type;
   }//getType
 
  /**
